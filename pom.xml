@@ -17,5 +17,6 @@
         <module>gulimall-ware</module>
 <!--        <module>renren-fast</module>-->
         <module>renren-security</module>
+        <module>gulimall-common</module>
     </modules>
 </project>
