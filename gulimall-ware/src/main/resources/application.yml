@@ -2,7 +2,7 @@ spring:
   datasource:
     username: root
     password: anhnEwaEyYbRc5M=
-    url: jdbc:mysql://106.52.81.158:3306/gulimall_wms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://36.139.164.245:3306/gulimall_wms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.jdbc.Driver
 
 mybatis-plus:
