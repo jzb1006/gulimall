@@ -5,7 +5,7 @@ spring:
       driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://36.139.164.245:3306/gulimall_admin?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
       username: root
-      password: anhnEwaEyYbRc5M=
+      password: 123456
       #      #Oracle
       #      driver-class-name: oracle.jdbc.OracleDriver
       #      url: jdbc:oracle:thin:@192.168.10.10:1521:xe

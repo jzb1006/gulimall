@@ -10,6 +10,7 @@ import com.example.gulimall.common.validator.group.AddGroup;
 import com.example.gulimall.common.validator.group.DefaultGroup;
 import com.example.gulimall.common.validator.group.UpdateGroup;
 import com.example.gulimall.member.dto.MemberDTO;
+import com.example.gulimall.member.feign.CouponService;
 import com.example.gulimall.member.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -37,6 +38,9 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    CouponService couponService;
+
     @GetMapping("page")
     @ApiOperation("分页")
     @ApiImplicitParams({
@@ -55,7 +59,8 @@ public class MemberController {
     @ApiOperation("信息")
     public Result<MemberDTO> get(@PathVariable("id") Long id){
         MemberDTO data = memberService.get(id);
-
+        Result<String> stringResult = couponService.test();
+        System.out.println(stringResult.getData());
         return new Result<MemberDTO>().ok(data);
     }
 

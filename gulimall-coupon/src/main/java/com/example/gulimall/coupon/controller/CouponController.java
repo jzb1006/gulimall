@@ -1,5 +1,6 @@
 package com.example.gulimall.coupon.controller;
 
+import cn.hutool.json.JSONUtil;
 import com.example.gulimall.common.annotation.LogOperation;
 import com.example.gulimall.common.constant.Constant;
 import com.example.gulimall.common.page.PageData;
@@ -16,6 +17,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -30,12 +33,19 @@ import java.util.Map;
  * @author ${author} sunlightcs@gmail.com
  * @since 1.0.0 2022-06-21
  */
+@RefreshScope
 @RestController
 @RequestMapping("coupon/coupon")
 @Api(tags="优惠券信息")
 public class CouponController {
     @Autowired
     private CouponService couponService;
+
+    @Value("${coupon.name}")
+    private String name;
+
+    @Value("${coupon.age}")
+    private String age;
 
     @GetMapping("page")
     @ApiOperation("分页")
@@ -51,12 +61,19 @@ public class CouponController {
         return new Result<PageData<CouponDTO>>().ok(page);
     }
 
+    @GetMapping("test")
+    public Result<String> test(){
+        System.out.println(age);
+        System.out.println(name);
+        return new Result<String>().ok("远程调用");
+    }
+
     @GetMapping("{id}")
     @ApiOperation("信息")
-    public Result<CouponDTO> get(@PathVariable("id") Long id){
+    public Result<String> get(@PathVariable("id") Long id){
         CouponDTO data = couponService.get(id);
-
-        return new Result<CouponDTO>().ok(data);
+        String s = JSONUtil.toJsonStr(data);
+        return new Result<String>().ok(s);
     }
 
     @PostMapping
