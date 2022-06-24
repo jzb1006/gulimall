@@ -8,6 +8,8 @@
 
 package io.renren;
 
+import com.alibaba.nacos.spring.context.annotation.config.EnableNacosConfig;
+import com.alibaba.nacos.spring.context.annotation.discovery.EnableNacosDiscovery;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -19,6 +21,8 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
  *
  * @author Mark sunlightcs@gmail.com
  */
+@EnableNacosDiscovery
+@EnableNacosConfig
 @SpringBootApplication
 public class AdminApplication extends SpringBootServletInitializer {
 

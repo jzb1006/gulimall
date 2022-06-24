@@ -1,11 +1,13 @@
 package com.example.gulimall.product.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.gulimall.common.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 商品三级分类
@@ -55,4 +57,7 @@ public class CategoryEntity {
      * 商品数量
      */
 	private Integer productCount;
+
+	@TableField(exist=false)
+	private List<CategoryEntity> children;
 }

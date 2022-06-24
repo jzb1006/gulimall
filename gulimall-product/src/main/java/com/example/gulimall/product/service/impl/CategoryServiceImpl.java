@@ -9,7 +9,10 @@ import com.example.gulimall.product.service.CategoryService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 商品三级分类
@@ -31,4 +34,28 @@ public class CategoryServiceImpl extends CrudServiceImpl<CategoryDao, CategoryEn
     }
 
 
+    @Override
+    public List<CategoryEntity> listWithTree() {
+        List<CategoryEntity> categoryEntities = baseDao.selectList(null);
+        List<CategoryEntity> collect = categoryEntities.stream().filter(categoryEntity -> categoryEntity.getParentCid() == 0).map(menu -> {
+            menu.setChildren(getChildren(menu,categoryEntities));
+            return menu;
+        }).sorted((menu1,menu2)->{
+            return (menu1.getSort()==null?0:menu1.getSort()) - (menu2.getSort()==null?0:menu2.getSort());
+        }).collect(Collectors.toList());
+
+        return collect;
+    }
+
+    private List<CategoryEntity> getChildren(CategoryEntity root,List<CategoryEntity> all) {
+        List<CategoryEntity> collect = all.stream().filter(categoryEntity -> {
+            return categoryEntity.getParentCid().equals(root.getCatId());
+        }).map(categoryEntity -> {
+            categoryEntity.setChildren(getChildren(categoryEntity, all));
+            return categoryEntity;
+        }).sorted((menu1, menu2) -> {
+            return (menu1.getSort()==null?0:menu1.getSort()) - (menu2.getSort()==null?0:menu2.getSort());
+        }).collect(Collectors.toList());
+        return collect ;
+    }
 }
