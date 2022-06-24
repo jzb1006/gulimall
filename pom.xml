@@ -15,8 +15,11 @@
         <module>gulimall-order</module>
         <module>gulimall-product</module>
         <module>gulimall-ware</module>
-<!--        <module>renren-fast</module>-->
-        <module>renren-security</module>
         <module>gulimall-common</module>
+        <module>gulimall-gateway</module>
+<!--        <module>renren-fast</module>-->
+<!--        <module>renren-security/renren-admin</module>-->
+<!--        <module>renren-security</module>-->
+
     </modules>
 </project>

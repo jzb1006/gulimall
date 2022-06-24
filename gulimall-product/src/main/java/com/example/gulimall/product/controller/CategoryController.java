@@ -10,6 +10,7 @@ import com.example.gulimall.common.validator.group.AddGroup;
 import com.example.gulimall.common.validator.group.DefaultGroup;
 import com.example.gulimall.common.validator.group.UpdateGroup;
 import com.example.gulimall.product.dto.CategoryDTO;
+import com.example.gulimall.product.entity.CategoryEntity;
 import com.example.gulimall.product.service.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -37,6 +38,8 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+
+
     @GetMapping("page")
     @ApiOperation("分页")
     @ApiImplicitParams({
@@ -49,6 +52,12 @@ public class CategoryController {
         PageData<CategoryDTO> page = categoryService.page(params);
 
         return new Result<PageData<CategoryDTO>>().ok(page);
+    }
+
+    @GetMapping("list/tree")
+    public Result<List<CategoryEntity>> listTree(){
+        List<CategoryEntity> categoryEntities = categoryService.listWithTree();
+        return new Result<List<CategoryEntity>>().ok(categoryEntities);
     }
 
     @GetMapping("{id}")

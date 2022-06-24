@@ -47,6 +47,15 @@ spring:
         wall:
           config:
             multi-statement-allow: true
+  application:
+    name: renren-admin
+
+nacos:
+  discovery:
+    server-addr: 36.139.164.245:8848
+  config:
+    bootstrap:
+      log-enable: true
 
 ##多数据源的配置，需要引用renren-dynamic-datasource
 #dynamic:
