@@ -1,6 +1,7 @@
 package com.example.gulimall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.gulimall.common.entity.BaseEntity;
 import lombok.Data;
@@ -40,6 +41,7 @@ public class CategoryEntity {
     /**
      * 是否显示[0-不显示，1显示]
      */
+	@TableLogic(value = "1",delval = "0")
 	private Integer showStatus;
     /**
      * 排序
