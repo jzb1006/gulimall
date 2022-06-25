@@ -53,6 +53,7 @@ public abstract class CrudServiceImpl<M extends BaseMapper<T>, T, D> extends Bas
 
     @Override
     public D get(Long id) {
+        System.out.println(baseDao);
         T entity = baseDao.selectById(id);
 
         return ConvertUtils.sourceToTarget(entity, currentDtoClass());
