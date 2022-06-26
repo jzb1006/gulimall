@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.gulimall.product.dto.BrandDTO;
 import com.example.gulimall.product.entity.BrandEntity;
 import com.example.gulimall.product.service.BrandService;
+import com.example.gulimall.product.service.CategoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +22,8 @@ class GulimallProductApplicationTests {
     @Autowired
     BrandService brandService;
 
+    @Autowired
+    CategoryService categoryService;
     @Test
     void contextLoads() {
         BrandDTO brandDTO = new BrandDTO();
@@ -30,6 +33,14 @@ class GulimallProductApplicationTests {
         List<BrandDTO> list = brandService.list(map);
         System.out.println(list);
 
+    }
+
+
+
+    @Test
+    public void findParentPath(){
+        Long[] categoryPath = categoryService.findCategoryPath(255L);
+        System.out.println(categoryPath);
     }
 
 

@@ -47,6 +47,24 @@ public class CategoryServiceImpl extends CrudServiceImpl<CategoryDao, CategoryEn
         return collect;
     }
 
+    @Override
+    public Long[] findCategoryPath(Long categoryId) {
+        List<Long> paths = new ArrayList<>();
+        List<Long> parentPaths = new ArrayList<>();
+        List<Long> parentPath = findParentPath(categoryId, paths);
+
+        return  parentPath.toArray(new Long[parentPath.size()]);
+    }
+
+    private List<Long> findParentPath(Long categoryId,List<Long> paths){
+        paths.add(categoryId);
+        CategoryDTO categoryDTO = this.get(categoryId);
+        if (categoryDTO.getParentCid() != 0){
+            findParentPath(categoryDTO.getParentCid(),paths);
+        }
+        return paths;
+    }
+
     private List<CategoryEntity> getChildren(CategoryEntity root,List<CategoryEntity> all) {
         List<CategoryEntity> collect = all.stream().filter(categoryEntity -> {
             return categoryEntity.getParentCid().equals(root.getCatId());

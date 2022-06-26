@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.example.gulimall.common.page.PageData;
 import com.example.gulimall.common.service.CrudService;
 import com.example.gulimall.common.utils.ConvertUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Arrays;
@@ -34,9 +35,14 @@ public abstract class CrudServiceImpl<M extends BaseMapper<T>, T, D> extends Bas
 
     @Override
     public PageData<D> page(Map<String, Object> params) {
+        String key = (String) params.get("key");
+        QueryWrapper<T> wrapper = getWrapper(params);
+        if (!StringUtils.isEmpty(key)){
+            wrapper.eq("brand_id",key).or().like("name",key);
+        }
         IPage<T> page = baseDao.selectPage(
             getPage(params, null, false),
-            getWrapper(params)
+                wrapper
         );
 
         return getPageData(page, currentDtoClass());
