@@ -1,3 +1,6 @@
 logging:
   level:
     com.example.gulimall: debug
+spring:
+  jackson:
+    property-naming-strategy: SNAKE_CASE

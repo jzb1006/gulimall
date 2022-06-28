@@ -17,7 +17,7 @@ public class GulimallElasticSearchConfig {
 
 
     @Bean
-    public ElasticsearchClient esClient(){
+    public ElasticsearchClient esClient() {
         // Create the low-level client
         RestClient restClient = RestClient.builder(
                 new HttpHost("36.139.164.245", 9200)).build();
