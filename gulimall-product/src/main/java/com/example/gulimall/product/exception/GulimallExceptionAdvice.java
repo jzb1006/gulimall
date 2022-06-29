@@ -31,6 +31,7 @@ public class GulimallExceptionAdvice {
 
     @ExceptionHandler(value = Exception.class)
     public Result handleException(Exception e){
+        log.error(e.getMessage());
         Result result = new Result();
         result.setData(BizCodeEnume.UNKNOW_EXCEPTION.getMsg());
         result.setCode(BizCodeEnume.UNKNOW_EXCEPTION.getCode());

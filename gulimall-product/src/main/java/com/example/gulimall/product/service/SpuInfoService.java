@@ -12,4 +12,5 @@ import com.example.gulimall.product.entity.SpuInfoEntity;
  */
 public interface SpuInfoService extends CrudService<SpuInfoEntity, SpuInfoDTO> {
 
+    void up(Long spuId);
 }

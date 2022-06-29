@@ -37,6 +37,12 @@ public class SpuInfoController {
     @Autowired
     private SpuInfoService spuInfoService;
 
+
+    @PostMapping("{spuId}")
+    public Result<Boolean> up(@PathVariable Long spuId){
+        spuInfoService.up(spuId);
+        return new Result<Boolean>().ok(true);
+    }
     @GetMapping("page")
     @ApiOperation("分页")
     @ApiImplicitParams({
