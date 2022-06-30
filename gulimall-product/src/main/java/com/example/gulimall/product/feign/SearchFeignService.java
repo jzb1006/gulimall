@@ -1,5 +1,6 @@
 package com.example.gulimall.product.feign;
 
+import com.example.gulimall.common.dto.es.SkuModel;
 import com.example.gulimall.common.dto.es.SpuBoundsDTO;
 import com.example.gulimall.common.utils.Result;
 import com.example.gulimall.product.dto.SkuModelDto;
@@ -16,7 +17,7 @@ import java.util.List;
 public interface SearchFeignService {
 
     @PostMapping("search/save/product")
-    Result<Boolean> productSave(@RequestBody List<SkuModelDto> skuModelList);
+    Result<Boolean> productSave(@RequestBody List<SkuModel> skuModelList);
 
     @PostMapping("search/save/test")
     Result<Boolean> test(@RequestBody SpuBoundsDTO skuModel);

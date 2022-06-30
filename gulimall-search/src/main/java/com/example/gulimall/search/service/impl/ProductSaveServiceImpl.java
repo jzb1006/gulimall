@@ -30,6 +30,7 @@ public class ProductSaveServiceImpl implements ProductSaveService {
         for (SkuModel skuModel : skuModelList) {
             br.operations(op -> op.index(idx -> idx
                     .index(EsConstant.PRODUCT_INDEX)
+                    .id(String.valueOf(skuModel.getSkuId()))
                     .document(skuModel)
             ));
         }

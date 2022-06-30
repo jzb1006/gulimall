@@ -45,43 +45,46 @@ public class SpuInfoServiceImpl extends CrudServiceImpl<SpuInfoDao, SpuInfoEntit
     @Override
     public void up(Long spuId) {
         // todo 查询到商的相关信息 然后通过search的服务保存
-        SkuModelDto skuModel = new SkuModelDto();
-        skuModel.setSkuId(1L);
-        skuModel.setSpuId(1L);
-        skuModel.setSkuTitle("小米11红色");
-        skuModel.setSkuPrice(new BigDecimal("1000"));
+        SkuModel skuModel = new SkuModel();
+        skuModel.setSkuId(11L);
+        skuModel.setSpuId(4L);
+        skuModel.setSkuTitle("华为 MATE 11");
+        skuModel.setSkuPrice(new BigDecimal("100"));
         skuModel.setSkuImg("http://www.baidu.com");
-        skuModel.setSaleCount(true);
-        skuModel.setHasStock(1000L);
-        skuModel.setHotScore(10L);
-        skuModel.setBrandId(40L);
+        skuModel.setSaleCount(40L);
+        skuModel.setHasStock(true);
+        skuModel.setHotScore(50L);
+        skuModel.setBrandId(60L);
         skuModel.setCatalogId(20L);
-        skuModel.setBrandName("小米");
-        skuModel.setBrandImg("http://www.baidu.com");
-        skuModel.setCatalogName("智能手机");
+        skuModel.setBrandName("华为");
+        skuModel.setBrandImg("http://www.huawei.com");
+        skuModel.setCatalogName("智能商务手机");
 
-        SkuModelDto.Attr attr = new SkuModelDto.Attr();
+        SkuModel.Attr attr = new SkuModel.Attr();
         attr.setAttrId(10L);
         attr.setAttrName(20L);
         attr.setAttrValue(50L);
 
-        SkuModelDto.Attr attr2 = new SkuModelDto.Attr();
+        SkuModel.Attr attr2 = new SkuModel.Attr();
         attr2.setAttrId(1L);
         attr2.setAttrName(2L);
         attr2.setAttrValue(6L);
 
-        List<SkuModelDto.Attr> attrs = new ArrayList<>();
+        List<SkuModel.Attr> attrs = new ArrayList<>();
         System.out.println(attrs);
         attrs.add(attr2);
         attrs.add(attr);
 
         skuModel.setAttrs(attrs);
 
-        List<SkuModelDto> list = new ArrayList<>();
+        List<SkuModel> list = new ArrayList<>();
         list.add(skuModel);
         System.out.println("=======");
         System.out.println(list);
         Result<Boolean> booleanResult = service.productSave(list);
+        System.out.println(booleanResult.getData());
+        System.out.println(booleanResult.getCode());
+        System.out.println(booleanResult.getMsg());
         if (booleanResult.getData()){
             // todo 上传成功后需要去修改商品状态
         }else {

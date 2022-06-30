@@ -15,7 +15,7 @@ public class SkuModelDto {
     private String skuTitle;
     private BigDecimal skuPrice;
     private String skuImg;
-    private Boolean saleCount;
+    private Long saleCount;
     private Long hasStock;
     private Long hotScore;
     private Long brandId;

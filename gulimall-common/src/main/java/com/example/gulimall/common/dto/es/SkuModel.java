@@ -19,8 +19,8 @@ public class SkuModel implements Serializable {
     private String skuTitle;
     private BigDecimal skuPrice;
     private String skuImg;
-    private Boolean saleCount;
-    private Long hasStock;
+    private Long saleCount;
+    private Boolean hasStock;
     private Long hotScore;
     private Long brandId;
     private Long catalogId;
