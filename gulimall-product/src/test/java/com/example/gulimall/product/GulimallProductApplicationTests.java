@@ -8,6 +8,7 @@ import com.example.gulimall.product.service.CategoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,6 +25,9 @@ class GulimallProductApplicationTests {
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
     @Test
     void contextLoads() {
         BrandDTO brandDTO = new BrandDTO();
@@ -42,6 +46,14 @@ class GulimallProductApplicationTests {
         Long[] categoryPath = categoryService.findCategoryPath(255L);
         System.out.println(categoryPath);
     }
+
+    @Test
+    public  void  redisTest(){
+        stringRedisTemplate.opsForValue().set("name", "zhangsan");
+        String name = stringRedisTemplate.opsForValue().get("name");
+        System.out.println(name);
+    }
+
 
 
 
