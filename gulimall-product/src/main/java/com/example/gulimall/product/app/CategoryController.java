@@ -16,13 +16,17 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -34,11 +38,36 @@ import java.util.Map;
 @RestController
 @RequestMapping("product/category")
 @Api(tags="商品三级分类")
+@Slf4j
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
 
+
+    @GetMapping("test")
+    public void cacheCategory(){
+        synchronized (this) {
+            String name = stringRedisTemplate.opsForValue().get("name");
+            if (name == null){
+                name = "";
+            }
+            if (StringUtils.isEmpty(name)){
+                name = stringRedisTemplate.opsForValue().get("name");
+                if (!StringUtils.isEmpty(name)){
+                    log.info("缓存锁中命中");
+                    log.info(name);
+                    return;
+                }
+                log.info("查询了数据库");
+                stringRedisTemplate.opsForValue().set("name", "zhangsan", 60, TimeUnit.SECONDS);
+            }
+            log.info("缓存命中");
+            log.info(name);
+        }
+    }
 
     @GetMapping("page")
     @ApiOperation("分页")
