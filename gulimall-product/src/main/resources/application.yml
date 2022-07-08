@@ -2,3 +2,5 @@ logging:
   level:
     com.example.gulimall: debug
 
+server:
+  port: 10000
