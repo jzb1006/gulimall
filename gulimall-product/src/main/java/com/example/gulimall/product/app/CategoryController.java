@@ -19,6 +19,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.web.bind.annotation.*;
@@ -109,8 +110,10 @@ public class CategoryController {
         return new Result<PageData<CategoryDTO>>().ok(page);
     }
 
+    @Cacheable(value = {"category"},key = "'levelCategorys'")
     @GetMapping("list/tree")
     public Result<List<CategoryEntity>> listTree() {
+        log.info("查询所有分类");
         List<CategoryEntity> categoryEntities = categoryService.listWithTree();
         return new Result<List<CategoryEntity>>().ok(categoryEntities);
     }

@@ -7,6 +7,7 @@ import com.example.gulimall.common.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -17,49 +18,48 @@ import java.util.List;
  * @since 1.0.0 2022-06-21
  */
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @TableName("pms_category")
-public class CategoryEntity {
-	private static final long serialVersionUID = 1L;
-
+public class CategoryEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * 分类id
      */
-	private Long catId;
+    private Long catId;
     /**
      * 分类名称
      */
-	private String name;
+    private String name;
     /**
      * 父分类id
      */
-	private Long parentCid;
+    private Long parentCid;
     /**
      * 层级
      */
-	private Integer catLevel;
+    private Integer catLevel;
     /**
      * 是否显示[0-不显示，1显示]
      */
-	@TableLogic(value = "1",delval = "0")
-	private Integer showStatus;
+    @TableLogic(value = "1", delval = "0")
+    private Integer showStatus;
     /**
      * 排序
      */
-	private Integer sort;
+    private Integer sort;
     /**
      * 图标地址
      */
-	private String icon;
+    private String icon;
     /**
      * 计量单位
      */
-	private String productUnit;
+    private String productUnit;
     /**
      * 商品数量
      */
-	private Integer productCount;
+    private Integer productCount;
 
-	@TableField(exist=false)
-	private List<CategoryEntity> children;
+    @TableField(exist = false)
+    private List<CategoryEntity> children;
 }
