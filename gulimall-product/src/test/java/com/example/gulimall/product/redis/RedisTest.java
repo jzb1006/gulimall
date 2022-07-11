@@ -3,6 +3,7 @@ package com.example.gulimall.product.redis;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -14,6 +15,9 @@ import java.util.concurrent.TimeUnit;
 public class RedisTest {
     @Autowired
     StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    RedissonClient redissonClient;
 
     /**
      * todo 本地锁测试，在分布式的情况下，必须使用分布式锁。
@@ -39,5 +43,11 @@ public class RedisTest {
             }
             log.info(name);
         }
+    }
+
+    @Test
+    public void redisson(){
+        redissonClient.getMapCache("name").put("name", "zhangsan111", 60, TimeUnit.SECONDS);
+        log.info((String) redissonClient.getMapCache("name").get("name"));
     }
 }
