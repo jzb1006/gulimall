@@ -32,7 +32,7 @@ public class SkuModel implements Serializable {
     @Data
     public static class Attr{
         private Long attrId;
-        private Long attrName;
-        private Long attrValue;
+        private String attrName;
+        private String attrValue;
     }
 }

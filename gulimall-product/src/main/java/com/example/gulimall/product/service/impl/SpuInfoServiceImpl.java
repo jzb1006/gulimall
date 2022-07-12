@@ -46,29 +46,29 @@ public class SpuInfoServiceImpl extends CrudServiceImpl<SpuInfoDao, SpuInfoEntit
     public void up(Long spuId) {
         // todo 查询到商的相关信息 然后通过search的服务保存
         SkuModel skuModel = new SkuModel();
-        skuModel.setSkuId(11L);
-        skuModel.setSpuId(4L);
-        skuModel.setSkuTitle("华为 MATE 11");
-        skuModel.setSkuPrice(new BigDecimal("100"));
+        skuModel.setSkuId(19L);
+        skuModel.setSpuId(16L);
+        skuModel.setSkuTitle("华为 MATE 16 Pro 超级续航安全手机");
+        skuModel.setSkuPrice(new BigDecimal("6000"));
         skuModel.setSkuImg("http://www.baidu.com");
-        skuModel.setSaleCount(40L);
+        skuModel.setSaleCount(9L);
         skuModel.setHasStock(true);
-        skuModel.setHotScore(50L);
-        skuModel.setBrandId(60L);
-        skuModel.setCatalogId(20L);
+        skuModel.setHotScore(30L);
+        skuModel.setBrandId(100L);
+        skuModel.setCatalogId(10L);
         skuModel.setBrandName("华为");
         skuModel.setBrandImg("http://www.huawei.com");
-        skuModel.setCatalogName("智能商务手机");
+        skuModel.setCatalogName("超级续航安全手机");
 
         SkuModel.Attr attr = new SkuModel.Attr();
-        attr.setAttrId(10L);
-        attr.setAttrName(20L);
-        attr.setAttrValue(50L);
+        attr.setAttrId(1L);
+        attr.setAttrName("Intel处理器");
+        attr.setAttrValue("I9-9300");
 
         SkuModel.Attr attr2 = new SkuModel.Attr();
-        attr2.setAttrId(1L);
-        attr2.setAttrName(2L);
-        attr2.setAttrValue(6L);
+        attr2.setAttrId(2L);
+        attr2.setAttrName("Amd理器");
+        attr2.setAttrValue("777");
 
         List<SkuModel.Attr> attrs = new ArrayList<>();
         System.out.println(attrs);
