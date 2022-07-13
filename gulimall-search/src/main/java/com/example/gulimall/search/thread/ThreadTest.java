@@ -51,6 +51,22 @@ public class ThreadTest {
 
         /**
          * 连个任务都完成
+         *
+         *  CompletableFuture<Integer> future1 = CompletableFuture.supplyAsync(() -> {
+         *             System.out.println("任务1开始执行");
+         *             Integer i = 10 / 4;
+         *             System.out.println("任务1执行完成");
+         *             return i;
+         *         }, executor);
+         *
+         *         CompletableFuture<Integer> future2 = CompletableFuture.supplyAsync(() -> {
+         *             System.out.println("任务2开始执行");
+         *             Integer i = 10 / 2;
+         *             System.out.println("任务2执行完成");
+         *             return i;
+         *         }, executor);
+         *
+         *
          * runAfterBothAsync 无法获取前两个的结果
          * runAfterBothAsync(future2, () -> {
          *             System.out.println("任务3开始");
@@ -74,9 +90,49 @@ public class ThreadTest {
          *         });
          *
          */
+
+        /**
+         * 连个任务只要一个完成，就会执行
+         *
+         * runAfterEitherAsync 无法获取前两个的结果 不可以返回结果
+         *  future1.runAfterEitherAsync(future2, () -> {
+         *             System.out.println("任务3开始");
+         *         }, executor);
+         *
+         * acceptEitherAsync 可以获取前两个的结果 但是不能返回结果
+         *  future1.acceptEitherAsync(future2, (result1) -> {
+         *             System.out.println("任务3开始执行");
+         *             System.out.println("前两个执行结果之一" + result1);
+         *             System.out.println("任务3执行完成");
+         *         }, executor);
+         *
+         *  applyToEitherAsync 可以获取前两个的结果 也可以返回结果
+         * CompletableFuture<Integer> integerCompletableFuture = future1.applyToEitherAsync(future2, (result1) -> {
+         *             System.out.println("任务3开始执行");
+         *             System.out.println("前两个任务的结果之一" + result1);
+         *             System.out.println("任务3执行完成");
+         *             return result1;
+         *         }, executor);
+         *
+         */
+
+        /**
+         * 所有都完成
+         * CompletableFuture.allOf(future1, future2, future3).join(); // 所有都完成才会执行
+         *
+         *CompletableFuture<Object> objectCompletableFuture = CompletableFuture.anyOf(future1, future2, future3); // 只要有一个完成就会执行
+         *
+         *
+         *
+         */
         CompletableFuture<Integer> future1 = CompletableFuture.supplyAsync(() -> {
             System.out.println("任务1开始执行");
             Integer i = 10 / 4;
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("任务1执行完成");
             return i;
         }, executor);
@@ -84,24 +140,30 @@ public class ThreadTest {
         CompletableFuture<Integer> future2 = CompletableFuture.supplyAsync(() -> {
             System.out.println("任务2开始执行");
             Integer i = 10 / 2;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("任务2执行完成");
             return i;
         }, executor);
 
-        CompletableFuture<Integer> completableFuture = future1.thenCombineAsync(future2, (result1, result2) -> {
+        CompletableFuture<Integer> future3 = CompletableFuture.supplyAsync(() -> {
             System.out.println("任务3开始执行");
-            System.out.println("任务1执行结果" + result1);
-            System.out.println("任务2执行结果" + result2);
-            System.out.println("任务3执行完成" + (result1 + result2));
-            return result1 + result2;
-        });
+            Integer i = 10 / 2;
+            System.out.println("任务3执行完成");
+            return i;
+        }, executor);
+
+
+        CompletableFuture<Object> objectCompletableFuture = CompletableFuture.anyOf(future1, future2, future3);
         try {
-            System.out.println(completableFuture.get());
+            System.out.println("其中一个任务执行完成" + objectCompletableFuture.get());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("主线程结束");
     }
 }

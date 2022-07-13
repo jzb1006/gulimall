@@ -3,6 +3,9 @@ package com.example.gulimall.product.dao;
 import com.example.gulimall.common.dao.BaseDao;
 import com.example.gulimall.product.entity.AttrAttrgroupRelationEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 属性&属性分组关联
@@ -12,5 +15,8 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface AttrAttrgroupRelationDao extends BaseDao<AttrAttrgroupRelationEntity> {
+
+
+    List<String> selectAttrValueIdsByAttrId(@Param("attrId") Long attrId);
 	
 }
