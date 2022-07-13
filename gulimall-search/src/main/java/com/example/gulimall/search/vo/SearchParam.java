@@ -9,7 +9,7 @@ public class SearchParam {
     /**
      * 关键字搜索
      */
-    private String keywords;
+    private String keyword;
 
     /**
      * 分类Id
