@@ -13,6 +13,7 @@
       <module fileurl="file://$PROJECT_DIR$/gulimall-search/gulimall-search.iml" filepath="$PROJECT_DIR$/gulimall-search/gulimall-search.iml" />
       <module fileurl="file://$PROJECT_DIR$/gulimall-third-party/gulimall-third-party.iml" filepath="$PROJECT_DIR$/gulimall-third-party/gulimall-third-party.iml" />
       <module fileurl="file://$PROJECT_DIR$/gulimall-ware/gulimall-ware.iml" filepath="$PROJECT_DIR$/gulimall-ware/gulimall-ware.iml" />
+      <module fileurl="file://$PROJECT_DIR$/renren-security/renren-security.iml" filepath="$PROJECT_DIR$/renren-security/renren-security.iml" />
     </modules>
   </component>
 </project>
