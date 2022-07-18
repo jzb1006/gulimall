@@ -20,11 +20,29 @@ public class ListenerTest {
     public void test(Message message, OrderDTO orderDTO, Channel channel) throws Exception {
         System.out.println("message: " + message);
         System.out.println("orderDTO: " + orderDTO);
+        try {
+            // 消息自增的id
+            long deliveryTag = message.getMessageProperties().getDeliveryTag();
+            // ack
+            channel.basicAck(deliveryTag, false);
+        }catch (Exception e){
+            // nack
+            channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
+        }
     }
 
     @RabbitHandler
     public void test2(Message message, OrderItem orderItem, Channel channel) throws Exception {
         System.out.println("message: " + message);
         System.out.println("orderItem: " + orderItem);
+        try {
+            // 消息自增的id
+            long deliveryTag = message.getMessageProperties().getDeliveryTag();
+            // ack
+            channel.basicAck(deliveryTag, false);
+        }catch (Exception e){
+            // nack
+            channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
+        }
     }
 }
