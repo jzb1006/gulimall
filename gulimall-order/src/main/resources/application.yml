@@ -22,4 +22,7 @@ server:
 
 spring:
   rabbitmq:
-    publisher-returns: true
+    publisher-returns: true # 开启发送端确认
+    publisher-confirm-type: correlated # 开启发送端消息抵达队列的确认
+    template:
+      mandatory: true # 只要抵达队列，以异步优先回调我们这个return-confirm

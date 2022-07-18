@@ -1,6 +1,8 @@
 package com.example.gulimall.order;
+
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.UUID;
 
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.example.gulimall.order.dto.OrderDTO;
@@ -11,6 +13,7 @@ import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,25 +26,25 @@ class GulimallOrderApplicationTests {
     AmqpAdmin amqpAdmin;
 
     @Autowired
-    RabbitTemplate  rabbitTemplate;
+    RabbitTemplate rabbitTemplate;
 
     @Test
     void createExchange() {
-        DirectExchange directExchange = new DirectExchange("hello-java-exchange",true,false);
+        DirectExchange directExchange = new DirectExchange("hello-java-exchange", true, false);
         amqpAdmin.declareExchange(directExchange);
         log.info("directExchange: {}", directExchange);
     }
 
     @Test
     void createQueue() {
-        Queue queue = new Queue("hello-java-queue",true,false,false);
+        Queue queue = new Queue("hello-java-queue", true, false, false);
         amqpAdmin.declareQueue(queue);
         log.info("queue: {}", queue);
     }
 
     @Test
     void createBinding() {
-        Binding binding = new Binding("hello-java-queue",Binding.DestinationType.QUEUE,"hello-java-exchange","hello.java",null);
+        Binding binding = new Binding("hello-java-queue", Binding.DestinationType.QUEUE, "hello-java-exchange", "hello.java", null);
         amqpAdmin.declareBinding(binding);
     }
 
@@ -55,11 +58,11 @@ class GulimallOrderApplicationTests {
                 OrderDTO orderDTO = new OrderDTO();
                 orderDTO.setId((long) i);
 
-                rabbitTemplate.convertAndSend("hello-java-exchange","hello.java",orderDTO);
+                rabbitTemplate.convertAndSend("hello-java-exchange", "hello.java", orderDTO, new CorrelationData(UUID.randomUUID().toString()));
             } else {
                 OrderItem orderItem = new OrderItem();
                 orderItem.setColumn(String.valueOf(i));
-                rabbitTemplate.convertAndSend("hello-java-exchange","hello.java",orderItem);
+                rabbitTemplate.convertAndSend("hello-java-exchange", "hello2.java", orderItem, new CorrelationData(UUID.randomUUID().toString()));
             }
         }
     }
