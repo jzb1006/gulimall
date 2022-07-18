@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.example.gulimall.order.dto.OrderDTO;
 import com.example.gulimall.order.dto.OrderReturnApplyDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -64,6 +65,26 @@ class GulimallOrderApplicationTests {
                 orderItem.setColumn(String.valueOf(i));
                 rabbitTemplate.convertAndSend("hello-java-exchange", "hello2.java", orderItem, new CorrelationData(UUID.randomUUID().toString()));
             }
+        }
+    }
+
+    // test
+    @Test
+    void test() {
+        // 测试订单号的生成
+        String timeId = IdWorker.getTimeId();
+        System.out.println(timeId);
+    }
+
+    // abs test
+    @Test
+    void testAbs() {
+        BigDecimal bigDecimal = new BigDecimal("100.001");
+        BigDecimal bigDecimal2 = new BigDecimal("100");
+        if (Math.abs(bigDecimal.subtract(bigDecimal2).doubleValue()) < 0.01) {
+            System.out.println("接受范围");
+        } else {
+            System.out.println("不接受范围");
         }
     }
 
