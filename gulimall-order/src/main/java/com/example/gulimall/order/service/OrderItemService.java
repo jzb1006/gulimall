@@ -11,5 +11,5 @@ import com.example.gulimall.order.entity.OrderItemEntity;
  * @since 1.0.0 2022-06-21
  */
 public interface OrderItemService extends CrudService<OrderItemEntity, OrderItemDTO> {
-
+    void test();
 }

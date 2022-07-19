@@ -8,6 +8,8 @@ import com.example.gulimall.order.entity.OrderItemEntity;
 import com.example.gulimall.order.service.OrderItemService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -31,4 +33,13 @@ public class OrderItemServiceImpl extends CrudServiceImpl<OrderItemDao, OrderIte
     }
 
 
+    @Override
+    //Isolation.REPEATABLE_READ mysql默认的事务隔离级别可重复读
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    public void test() {
+            this.insert(OrderItemEntity.builder()
+                    .orderId(12L)
+                    .build());
+        throw new RuntimeException("test");
+    }
 }

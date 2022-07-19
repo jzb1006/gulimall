@@ -37,6 +37,11 @@ public class OrderItemController {
     @Autowired
     private OrderItemService orderItemService;
 
+    @GetMapping("test")
+    public String test(){
+        orderItemService.test();
+        return "test";
+    }
     @GetMapping("page")
     @ApiOperation("分页")
     @ApiImplicitParams({

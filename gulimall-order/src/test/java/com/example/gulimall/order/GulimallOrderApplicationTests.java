@@ -6,8 +6,10 @@ import java.util.UUID;
 
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+import com.example.gulimall.order.dao.OrderItemDao;
 import com.example.gulimall.order.dto.OrderDTO;
 import com.example.gulimall.order.dto.OrderReturnApplyDTO;
+import com.example.gulimall.order.entity.OrderItemEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.core.AmqpAdmin;
@@ -18,6 +20,8 @@ import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @SpringBootTest
@@ -28,6 +32,9 @@ class GulimallOrderApplicationTests {
 
     @Autowired
     RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    OrderItemDao orderItemDao;
 
     @Test
     void createExchange() {
@@ -86,6 +93,36 @@ class GulimallOrderApplicationTests {
         } else {
             System.out.println("不接受范围");
         }
+    }
+
+    // test
+    @Test
+    @Transactional
+    public void test2() {
+        orderItemDao.insert(OrderItemEntity.builder()
+                .orderId(12L)
+                .build());
+//        throw new RuntimeException("test");
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED,timeout = 30)
+    @Test
+    public void test3() {
+        System.out.println("test3");
+        test4(); // 此时test4使用的和test3同一个事务，3的所有设置都传递到4了，3回滚4就回滚
+        test5(); // 5是新的一条事务，3回滚，5不回滚
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void test4() {
+        System.out.println("test4");
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void test5() {
+        System.out.println("test4");
     }
 
 }
