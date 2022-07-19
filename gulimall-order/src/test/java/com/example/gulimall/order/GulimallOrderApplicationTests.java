@@ -18,6 +18,7 @@ import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Propagation;
@@ -105,9 +106,11 @@ class GulimallOrderApplicationTests {
 //        throw new RuntimeException("test");
     }
 
-    @Transactional(propagation = Propagation.REQUIRED,timeout = 30)
+    // 传播行为的前提是要在不同的对象,如果在统一服务 设置的传播行为都不生效都为Propagation.REQUIRED
+    @Transactional(propagation = Propagation.REQUIRED, timeout = 30)
     @Test
     public void test3() {
+
         System.out.println("test3");
         test4(); // 此时test4使用的和test3同一个事务，3的所有设置都传递到4了，3回滚4就回滚
         test5(); // 5是新的一条事务，3回滚，5不回滚
@@ -124,5 +127,5 @@ class GulimallOrderApplicationTests {
     public void test5() {
         System.out.println("test4");
     }
-
 }
+
