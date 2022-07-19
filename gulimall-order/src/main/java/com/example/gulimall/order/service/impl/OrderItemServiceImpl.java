@@ -2,12 +2,16 @@ package com.example.gulimall.order.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.gulimall.common.service.impl.CrudServiceImpl;
+import com.example.gulimall.common.utils.Result;
 import com.example.gulimall.order.dao.OrderItemDao;
 import com.example.gulimall.order.dto.OrderItemDTO;
 import com.example.gulimall.order.entity.OrderItemEntity;
+import com.example.gulimall.order.feign.WareFeignService;
 import com.example.gulimall.order.service.OrderItemService;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.aop.framework.AopContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -24,6 +28,9 @@ import java.util.Map;
 @Service
 public class OrderItemServiceImpl extends CrudServiceImpl<OrderItemDao, OrderItemEntity, OrderItemDTO> implements OrderItemService {
 
+    @Autowired
+    WareFeignService wareFeignService;
+
     @Override
     public QueryWrapper<OrderItemEntity> getWrapper(Map<String, Object> params) {
         String id = (String) params.get("id");
@@ -35,7 +42,7 @@ public class OrderItemServiceImpl extends CrudServiceImpl<OrderItemDao, OrderIte
     }
 
 
-
+    @GlobalTransactional
     @Override
     //Isolation.REPEATABLE_READ mysql默认的事务隔离级别可重复读
     @Transactional(isolation = Isolation.REPEATABLE_READ)
@@ -43,7 +50,10 @@ public class OrderItemServiceImpl extends CrudServiceImpl<OrderItemDao, OrderIte
         this.insert(OrderItemEntity.builder()
                 .orderId(12L)
                 .build());
-        throw new RuntimeException("test");
+        Result<Boolean> save = wareFeignService.save();
+        System.out.println(save.getData());
+        //模拟异常
+        throw new RuntimeException("模拟异常");
     }
 
     // 事务失效问题，同一个对象内事务方法互调失败，原因绕过了代理对象，事务使用的代理对象来控制的。

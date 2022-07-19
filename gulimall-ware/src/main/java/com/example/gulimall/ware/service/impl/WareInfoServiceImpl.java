@@ -21,8 +21,8 @@ import java.util.Map;
 public class WareInfoServiceImpl extends CrudServiceImpl<WareInfoDao, WareInfoEntity, WareInfoDTO> implements WareInfoService {
 
     @Override
-    public QueryWrapper<WareInfoEntity> getWrapper(Map<String, Object> params){
-        String id = (String)params.get("id");
+    public QueryWrapper<WareInfoEntity> getWrapper(Map<String, Object> params) {
+        String id = (String) params.get("id");
 
         QueryWrapper<WareInfoEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id);
@@ -31,4 +31,10 @@ public class WareInfoServiceImpl extends CrudServiceImpl<WareInfoDao, WareInfoEn
     }
 
 
+    @Override
+    public Boolean insert() {
+        return this.insert(WareInfoEntity.builder()
+                .areacode("110000")
+                .build());
+    }
 }

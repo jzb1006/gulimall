@@ -12,4 +12,6 @@ import com.example.gulimall.ware.entity.WareInfoEntity;
  */
 public interface WareInfoService extends CrudService<WareInfoEntity, WareInfoDTO> {
 
+    Boolean insert();
+
 }
