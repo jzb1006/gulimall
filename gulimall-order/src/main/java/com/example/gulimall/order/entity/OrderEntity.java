@@ -2,6 +2,7 @@ package com.example.gulimall.order.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.gulimall.common.entity.BaseEntity;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,6 +15,7 @@ import java.util.Date;
  * @author ${author} sunlightcs@gmail.com
  * @since 1.0.0 2022-06-21
  */
+@Builder
 @Data
 @EqualsAndHashCode(callSuper=false)
 @TableName("oms_order")

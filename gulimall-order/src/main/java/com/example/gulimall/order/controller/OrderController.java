@@ -37,6 +37,16 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+
+    /**
+     * submitOrder
+     * @return
+     */
+    @GetMapping("submit")
+    Result<Boolean> submit(){
+        return new Result<Boolean>().ok(orderService.submitOrder());
+    }
+
     @GetMapping("page")
     @ApiOperation("分页")
     @ApiImplicitParams({

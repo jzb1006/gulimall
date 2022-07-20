@@ -12,4 +12,6 @@ import com.example.gulimall.order.entity.OrderEntity;
  */
 public interface OrderService extends CrudService<OrderEntity, OrderDTO> {
 
+    Boolean submitOrder();
+
 }

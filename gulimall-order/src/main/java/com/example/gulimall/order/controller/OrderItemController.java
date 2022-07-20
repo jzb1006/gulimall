@@ -39,7 +39,6 @@ public class OrderItemController {
 
     @GetMapping("test")
     public String test(){
-        orderItemService.test();
         return "test";
     }
     @GetMapping("page")

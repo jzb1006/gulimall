@@ -1,6 +1,7 @@
 package com.example.gulimall.order.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.example.gulimall.common.service.impl.CrudServiceImpl;
 import com.example.gulimall.order.dao.OrderItemDao;
 import com.example.gulimall.order.dto.OrderItemDTO;
@@ -39,11 +40,16 @@ public class OrderItemServiceImpl extends CrudServiceImpl<OrderItemDao, OrderIte
     @Override
     //Isolation.REPEATABLE_READ mysql默认的事务隔离级别可重复读
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public void test() {
-        this.insert(OrderItemEntity.builder()
-                .orderId(12L)
+    public Boolean insertOrderItem(Long orderId,String orderSn) {
+        // 创建订单
+        return this.insert(OrderItemEntity.builder().orderId(orderId)
+                .orderSn(orderSn)
+                .skuId(1L)
+                .skuName("华为")
+                .skuQuantity(2)
                 .build());
-        throw new RuntimeException("test");
+        // 调用远程锁定库存
+
     }
 
     // 事务失效问题，同一个对象内事务方法互调失败，原因绕过了代理对象，事务使用的代理对象来控制的。

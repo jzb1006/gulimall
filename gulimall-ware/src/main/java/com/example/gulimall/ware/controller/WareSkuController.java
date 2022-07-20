@@ -32,20 +32,37 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("ware/waresku")
-@Api(tags="商品库存")
+@Api(tags = "商品库存")
 public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
 
+
+    /**
+     * lockWareSku
+     */
+    @GetMapping("/lock/{skuId}/{num}/{wareId}")
+    public Result<Long> lockWareSku(@PathVariable("skuId") Long skuId, @PathVariable("num") Integer num, @PathVariable("wareId") Long wareId) {
+        return new Result<Long>().ok(wareSkuService.lockWareSku(skuId, num, wareId));
+    }
+
+    /**
+     * unlockWareSku
+     */
+    @GetMapping("/unlock/{skuId}/{num}/{wareId}")
+    public Result<Long> unlockWareSku(@PathVariable("skuId") Long skuId, @PathVariable("num") Integer num, @PathVariable("wareId") Long wareId) {
+        return new Result<Long>().ok(wareSkuService.unlockWareSku(skuId, num, wareId));
+    }
+
     @GetMapping("page")
     @ApiOperation("分页")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = Constant.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType="int") ,
-        @ApiImplicitParam(name = Constant.LIMIT, value = "每页显示记录数", paramType = "query",required = true, dataType="int") ,
-        @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
-        @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String")
+            @ApiImplicitParam(name = Constant.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.LIMIT, value = "每页显示记录数", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType = "String")
     })
-    public Result<PageData<WareSkuDTO>> page(@ApiIgnore @RequestParam Map<String, Object> params){
+    public Result<PageData<WareSkuDTO>> page(@ApiIgnore @RequestParam Map<String, Object> params) {
         PageData<WareSkuDTO> page = wareSkuService.page(params);
 
         return new Result<PageData<WareSkuDTO>>().ok(page);
@@ -53,7 +70,7 @@ public class WareSkuController {
 
     @GetMapping("{id}")
     @ApiOperation("信息")
-    public Result<WareSkuDTO> get(@PathVariable("id") Long id){
+    public Result<WareSkuDTO> get(@PathVariable("id") Long id) {
         WareSkuDTO data = wareSkuService.get(id);
 
         return new Result<WareSkuDTO>().ok(data);
@@ -62,7 +79,7 @@ public class WareSkuController {
     @PostMapping
     @ApiOperation("保存")
     @LogOperation("保存")
-    public Result save(@RequestBody WareSkuDTO dto){
+    public Result save(@RequestBody WareSkuDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 
@@ -74,7 +91,7 @@ public class WareSkuController {
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
-    public Result update(@RequestBody WareSkuDTO dto){
+    public Result update(@RequestBody WareSkuDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
@@ -86,7 +103,7 @@ public class WareSkuController {
     @DeleteMapping
     @ApiOperation("删除")
     @LogOperation("删除")
-    public Result delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody Long[] ids) {
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 
