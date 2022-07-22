@@ -2,12 +2,12 @@
 #  datasource:
 #    username: root
 #    password: 123456
-#    url: jdbc:mysql://36.139.164.245:3306/gulimall_ums?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#    url: jdbc:mysql://1.117.160.6:3306/gulimall_ums?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
 #    driver-class-name: com.mysql.jdbc.Driver
 #  cloud:
 #    nacos:
 #      discovery:
-#        server-addr: 36.139.164.245:8848
+#        server-addr: 1.117.160.6:8848
 #  application:
 #    name: gulimall-member
 #

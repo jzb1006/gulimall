@@ -20,7 +20,7 @@ public class GulimallElasticSearchConfig {
     public ElasticsearchClient esClient() {
         // Create the low-level client
         RestClient restClient = RestClient.builder(
-                new HttpHost("36.139.164.245", 9200)).build();
+                new HttpHost("1.117.160.6", 9200)).build();
 
 // Create the transport with a Jackson mapper
         ElasticsearchTransport transport = new RestClientTransport(

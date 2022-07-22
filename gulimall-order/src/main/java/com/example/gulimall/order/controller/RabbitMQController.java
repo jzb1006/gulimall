@@ -40,7 +40,10 @@ public class RabbitMQController {
     @GetMapping("/create-order")
     public String sendOrder() {
         // 模拟创建订单
-        OrderEntity orderEntity = OrderEntity.builder().orderSn(IdWorker.getTimeId()).modifyTime(new Date()).build();
+        OrderEntity orderEntity = new OrderEntity();
+
+        orderEntity.setOrderSn(IdWorker.getTimeId());
+        orderEntity.setModifyTime(new Date());
         //给队列发送消息
         rabbitTemplate.convertAndSend("order-event-exchange", "order.create.order", orderEntity);
         return "ok";

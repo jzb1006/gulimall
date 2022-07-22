@@ -14,4 +14,6 @@ public interface OrderService extends CrudService<OrderEntity, OrderDTO> {
 
     Boolean submitOrder();
 
+    void closeOrder(OrderEntity orderEntity);
+
 }

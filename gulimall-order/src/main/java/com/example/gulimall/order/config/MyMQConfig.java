@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,13 +16,13 @@ import java.util.HashMap;
 @Configuration
 public class MyMQConfig {
 
-    @RabbitListener(queues = "order.release.order.queue")
-    public void listener(OrderEntity orderEntity, Channel channel, Message message) throws Exception {
-        log.info("接收过期订单消息，准备取消订单" + orderEntity.getOrderSn());
-
-        //确认送达
-        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-    }
+//    @RabbitListener(queues = "order.release.order.queue")
+//    public void listener(OrderEntity orderEntity, Channel channel, Message message) throws Exception {
+//        log.info("接收过期订单消息，准备取消订单" + orderEntity.getOrderSn());
+//
+//        //确认送达
+//        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+//    }
 
     @Bean
     public Queue orderDelayQueue() {
@@ -60,6 +61,15 @@ public class MyMQConfig {
                 Binding.DestinationType.QUEUE,
                 "order-event-exchange",
                 "order.release.order", null);
+    }
+
+    @Bean
+    public Binding orderReleaseOtherBinding() {
+        return new Binding("stock.release.stock.queue",
+                Binding.DestinationType.QUEUE,
+                "order-event-exchange",
+                "order.release.other.#",
+                null);
     }
 
 }

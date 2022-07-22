@@ -1,4 +1,4 @@
-package com.example.gulimall.product.config;
+package com.example.gulimall.seckill.config;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
