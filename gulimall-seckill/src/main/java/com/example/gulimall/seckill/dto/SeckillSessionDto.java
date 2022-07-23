@@ -1,25 +1,13 @@
-package com.example.gulimall.coupon.entity;
+package com.example.gulimall.seckill.dto;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.example.gulimall.common.entity.BaseEntity;
-import com.example.gulimall.coupon.dto.SeckillSkuRelationDTO;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 import java.util.List;
 
-/**
- * 秒杀活动场次
- *
- * @author ${author} sunlightcs@gmail.com
- * @since 1.0.0 2022-06-21
- */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@TableName("sms_seckill_session")
-public class SeckillSessionEntity {
+public class SeckillSessionDto {
     private static final long serialVersionUID = 1L;
 
     /**
