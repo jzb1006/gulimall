@@ -32,8 +32,8 @@ public class SecKillSchedule {
      * 每天三点上架最近三天的秒杀商品
      */
     @Async
-    @Scheduled(cron = "0 0 3 * * ?")
-//    @Scheduled(cron = "0/5 * * * * ?")
+//    @Scheduled(cron = "0 0 3 * * ?")
+    @Scheduled(cron = "0/5 * * * * ?")
     public void uploadSeckillSkuLatest3Days() {
         log.info("执行定时任务");
         //为避免分布式情况下多服务同时上架的情况，使用分布式锁

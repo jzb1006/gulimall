@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.example.gulimall.common.dto.mq.OrderTo;
+import com.example.gulimall.common.dto.mq.SeckillOrderTo;
 import com.example.gulimall.common.service.impl.CrudServiceImpl;
 import com.example.gulimall.order.dao.OrderDao;
 import com.example.gulimall.order.dto.OrderDTO;
@@ -11,6 +12,7 @@ import com.example.gulimall.order.entity.OrderEntity;
 import com.example.gulimall.order.feign.WareFeignService;
 import com.example.gulimall.order.service.OrderItemService;
 import com.example.gulimall.order.service.OrderService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
@@ -29,6 +31,7 @@ import java.util.Map;
  * @since 1.0.0 2022-06-21
  */
 @Service
+@Slf4j
 public class OrderServiceImpl extends CrudServiceImpl<OrderDao, OrderEntity, OrderDTO> implements OrderService {
 
     @Autowired
@@ -82,6 +85,41 @@ public class OrderServiceImpl extends CrudServiceImpl<OrderDao, OrderEntity, Ord
         BeanUtils.copyProperties(orderEntity, orderTo);
         rabbitTemplate.convertAndSend("order-event-exchange", "order.release.other", orderTo);
 
+    }
+
+    @Transactional
+    @Override
+    public void createSeckillOrder(SeckillOrderTo orderTo) {
+        // todo 模拟创建秒杀订单
+        log.info("创建秒杀订单：{}", orderTo);
+//        MemberResponseVo memberResponseVo = LoginInterceptor.loginUser.get();
+//        //1. 创建订单
+//        OrderEntity orderEntity = new OrderEntity();
+//        orderEntity.setOrderSn(orderTo.getOrderSn());
+//        orderEntity.setMemberId(orderTo.getMemberId());
+//        if (memberResponseVo!=null){
+//            orderEntity.setMemberUsername(memberResponseVo.getUsername());
+//        }
+//        orderEntity.setStatus(OrderStatusEnum.CREATE_NEW.getCode());
+//        orderEntity.setCreateTime(new Date());
+//        orderEntity.setPayAmount(orderTo.getSeckillPrice().multiply(new BigDecimal(orderTo.getNum())));
+//        this.save(orderEntity);
+//        //2. 创建订单项
+//        R r = productFeignService.info(orderTo.getSkuId());
+//        if (r.getCode() == 0) {
+//            SeckillSkuInfoVo skuInfo = r.getData("skuInfo", new TypeReference<SeckillSkuInfoVo>() {
+//            });
+//            OrderItemEntity orderItemEntity = new OrderItemEntity();
+//            orderItemEntity.setOrderSn(orderTo.getOrderSn());
+//            orderItemEntity.setSpuId(skuInfo.getSpuId());
+//            orderItemEntity.setCategoryId(skuInfo.getCatalogId());
+//            orderItemEntity.setSkuId(skuInfo.getSkuId());
+//            orderItemEntity.setSkuName(skuInfo.getSkuName());
+//            orderItemEntity.setSkuPic(skuInfo.getSkuDefaultImg());
+//            orderItemEntity.setSkuPrice(skuInfo.getPrice());
+//            orderItemEntity.setSkuQuantity(orderTo.getNum());
+//            orderItemService.save(orderItemEntity);
+//        }
     }
 
 

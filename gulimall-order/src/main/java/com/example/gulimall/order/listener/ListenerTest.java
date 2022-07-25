@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
  * @author ZhibinJiang on 2022/7/15
  */
 @Service
-@RabbitListener(queues={"hello-java-queue"})
+//@RabbitListener(queues={"hello-java-queue"})
 public class ListenerTest {
 
 
-    @RabbitHandler
+//    @RabbitHandler
     public void test(Message message, OrderDTO orderDTO, Channel channel) throws Exception {
         System.out.println("message: " + message);
         System.out.println("orderDTO: " + orderDTO);
@@ -31,7 +31,7 @@ public class ListenerTest {
         }
     }
 
-    @RabbitHandler
+//    @RabbitHandler
     public void test2(Message message, OrderItem orderItem, Channel channel) throws Exception {
         System.out.println("message: " + message);
         System.out.println("orderItem: " + orderItem);

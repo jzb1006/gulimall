@@ -1,5 +1,6 @@
 package com.example.gulimall.order.service;
 
+import com.example.gulimall.common.dto.mq.SeckillOrderTo;
 import com.example.gulimall.common.service.CrudService;
 import com.example.gulimall.order.dto.OrderDTO;
 import com.example.gulimall.order.entity.OrderEntity;
@@ -16,4 +17,5 @@ public interface OrderService extends CrudService<OrderEntity, OrderDTO> {
 
     void closeOrder(OrderEntity orderEntity);
 
+    void createSeckillOrder(SeckillOrderTo orderTo);
 }

@@ -36,7 +36,7 @@ public class SeckillSkuRelationDTO implements Serializable {
 	private Integer seckillCount;
 
 	@ApiModelProperty(value = "每人限购数量")
-	private BigDecimal seckillLimit;
+	private Integer seckillLimit;
 
 	@ApiModelProperty(value = "排序")
 	private Integer seckillSort;

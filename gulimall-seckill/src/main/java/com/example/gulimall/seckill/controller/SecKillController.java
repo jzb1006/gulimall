@@ -4,10 +4,7 @@ import com.example.gulimall.common.utils.Result;
 import com.example.gulimall.seckill.dto.SeckillSkuRedisDto;
 import com.example.gulimall.seckill.service.SecKillService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,6 +32,16 @@ public class SecKillController {
     public Result<SeckillSkuRedisDto> getSeckillSkuInfo(@PathVariable("skuId") Long skuId) {
         SeckillSkuRedisDto to = secKillService.getSeckillSkuInfo(skuId);
         return new Result<SeckillSkuRedisDto>().ok(to);
+    }
+
+    @GetMapping("/kill")
+    public Result<String> kill(@RequestParam("killId") String killId,
+                               @RequestParam("key") String key,
+                               @RequestParam("num") Integer num) {
+        String orderSn = null;
+        orderSn = secKillService.kill(killId, key, num);
+        System.out.println(orderSn);
+        return new Result<String>().ok(orderSn);
     }
 
 }
