@@ -27,3 +27,8 @@ spring:
       pool:
         core-size: 5
         max-size: 50
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
