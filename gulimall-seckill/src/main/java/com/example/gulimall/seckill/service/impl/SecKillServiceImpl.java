@@ -1,6 +1,7 @@
 package com.example.gulimall.seckill.service.impl;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.example.gulimall.common.dto.mq.SeckillOrderTo;
@@ -64,7 +65,13 @@ public class SecKillServiceImpl implements SecKillService {
         }
     }
 
+    public List<SeckillSkuRedisDto> getSecKillSkuFallback(){
+        System.out.println("熔断器触发，调用失败");
+        return null;
+    }
+
     @Override
+    @SentinelResource(value = "getSecKillSku", fallback = "getSecKillSkuFallback")
     public List<SeckillSkuRedisDto> getCurrentSeckillSkus() {
         Set<String> keys = redisTemplate.keys(SESSION_CACHE_PREFIX + "*");
         long currentTime = System.currentTimeMillis();
