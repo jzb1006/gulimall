@@ -1,5 +1,7 @@
 package com.example.gulimall.product.app;
 
+import com.example.gulimall.common.dto.es.SpuBoundsDTO;
+import com.example.gulimall.product.feign.SearchFeignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,16 +17,17 @@ public class ThreadController {
     @Autowired
     ThreadPoolExecutor threadPoolExecutor;
 
+    @Autowired
+    SearchFeignService searchFeignService;
+
     @GetMapping("/test")
     public void test() {
         CompletableFuture.supplyAsync(() -> {
             System.out.println("开始执行");
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             System.out.println("执行完成");
+            SpuBoundsDTO spuBoundsDTO = new SpuBoundsDTO();
+            spuBoundsDTO.setSpuId(1L);
+            searchFeignService.test(spuBoundsDTO);
             return "执行完成";
         }, threadPoolExecutor).thenAccept(System.out::println);
     }

@@ -1,5 +1,6 @@
 package com.example.gulimall.coupon.service.impl;
 
+import com.alibaba.nacos.shaded.org.checkerframework.checker.units.qual.A;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.gulimall.common.service.impl.CrudServiceImpl;
 import com.example.gulimall.coupon.dao.SeckillSessionDao;
@@ -7,6 +8,7 @@ import com.example.gulimall.coupon.dto.SeckillSessionDTO;
 import com.example.gulimall.coupon.dto.SeckillSkuRelationDTO;
 import com.example.gulimall.coupon.entity.SeckillSessionEntity;
 import com.example.gulimall.coupon.entity.SeckillSkuRelationEntity;
+import com.example.gulimall.coupon.feign.ProductFeignService;
 import com.example.gulimall.coupon.service.SeckillSessionService;
 import com.example.gulimall.coupon.service.SeckillSkuRelationService;
 import org.apache.commons.lang3.StringUtils;
@@ -34,6 +36,9 @@ public class SeckillSessionServiceImpl extends CrudServiceImpl<SeckillSessionDao
     @Autowired
     SeckillSkuRelationService seckillSkuRelationService;
 
+    @Autowired
+    ProductFeignService productFeignService;
+
     @Override
     public QueryWrapper<SeckillSessionEntity> getWrapper(Map<String, Object> params) {
         String id = (String) params.get("id");
@@ -47,6 +52,7 @@ public class SeckillSessionServiceImpl extends CrudServiceImpl<SeckillSessionDao
 
     @Override
     public List<SeckillSessionEntity> getSeckillSessionsIn3Days() {
+        productFeignService.test();
         QueryWrapper<SeckillSessionEntity> startTime = new QueryWrapper<SeckillSessionEntity>().between("start_time", getStartTime(), getEndTime());
         List<SeckillSessionEntity> seckillSessionEntities = this.baseDao.selectList(startTime);
         if (seckillSessionEntities.size() == 0) {

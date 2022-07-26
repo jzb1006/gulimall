@@ -24,6 +24,7 @@ public class SecKillController {
     public Result<List<SeckillSkuRedisDto>> getCurrentSeckillSkus() {
         //获取到当前可以参加秒杀商品的信息
         List<SeckillSkuRedisDto> vos = secKillService.getCurrentSeckillSkus();
+        secKillService.uploadSeckillSkuLatest3Days();
 
         return new Result<List<SeckillSkuRedisDto>>().ok(vos);
     }

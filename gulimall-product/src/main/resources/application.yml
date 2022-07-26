@@ -6,6 +6,14 @@ server:
   port: 10000
 
 spring:
+  sleuth:
+    sampler:
+      probability: 1
+  zipkin:
+    base-url: http://1.117.160.6:9411/
+    discovery-client-enabled: false
+    sender:
+      type: web
   task:
     execution:
       pool:

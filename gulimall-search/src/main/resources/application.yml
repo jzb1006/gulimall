@@ -1,3 +1,13 @@
 logging:
   level:
     com.example.gulimall: debug
+
+spring:
+  sleuth:
+    sampler:
+      probability: 1
+  zipkin:
+    base-url: http://1.117.160.6:9411/
+    discovery-client-enabled: false
+    sender:
+      type: web
