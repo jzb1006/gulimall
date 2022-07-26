@@ -4,3 +4,18 @@ logging:
 
 server:
   port: 10000
+
+spring:
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 50
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
+feign:
+  sentinel:
+    enabled: true
